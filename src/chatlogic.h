@@ -19,7 +19,7 @@ private:
     // data handles (owned)
     // nodes and edges will be accessed by chatbot and other classes. Thus use shared ptr
     std::vector<std::shared_ptr<GraphNode>> _nodes;
-    std::vector<std::shared_ptr<GraphEdge>> _edges;
+    std::vector<GraphEdge *> _edges;;
 
     ////
     //// EOF STUDENT CODE

@@ -2,6 +2,7 @@
 #define CHATBOT_H_
 
 #include <wx/bitmap.h>
+#include <iostream>
 #include <string>
 
 class GraphNode; // forward declaration
@@ -29,7 +30,41 @@ public:
 
     //// STUDENT CODE
     ////
-
+    ChatBot(ChatBot &);
+    ChatBot(ChatBot &&);
+    
+    // Copy operator with exclusive policy
+    ChatBot &operator=(ChatBot &that) {
+      std::cout << "ChatBot Copy Operator" << std::endl;
+      _currentNode = that._currentNode;
+      _rootNode = that._rootNode;
+      _chatLogic = that._chatLogic;
+      _image = that._image;
+  
+      that._currentNode = nullptr;
+      that._rootNode = nullptr;
+      that._chatLogic = nullptr;
+      that._image = nullptr;
+  
+      return *this;
+     }
+     
+    // Move operator
+    ChatBot &operator=(ChatBot &&that) {
+      std::cout << "ChatBot Move Operator" << std::endl;
+      _currentNode = that._currentNode;
+      _rootNode = that._rootNode;
+      _chatLogic = that._chatLogic;
+      _image = that._image;
+  
+      that._currentNode = nullptr;
+      that._rootNode = nullptr;
+      that._chatLogic = nullptr;
+      that._image = nullptr;
+  
+      return *this;
+    }
+     
     ////
     //// EOF STUDENT CODE
 

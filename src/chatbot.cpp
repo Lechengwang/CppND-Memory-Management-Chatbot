@@ -1,4 +1,3 @@
-#include <iostream>
 #include <random>
 #include <algorithm>
 #include <ctime>
@@ -44,6 +43,34 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+// For copy constructor and copy operator, choose 'exclusive' ownership policy
+// No need to update destructor as destructor already checking if _image != NULL
+ChatBot::ChatBot(ChatBot &that) {
+  std::cout << "ChatBot Copy Constructor" << std::endl;
+  _currentNode = that._currentNode;
+  _rootNode = that._rootNode;
+  _chatLogic = that._chatLogic;
+  _image = that._image;
+  
+  that._currentNode = nullptr;
+  that._rootNode = nullptr;
+  that._chatLogic = nullptr;
+  that._image = nullptr;
+}
+
+// Move construstor/operator are similar as Copy constructor/operator as Copy is using exclusive policy.
+ChatBot::ChatBot(ChatBot && that) {
+  std::cout << "ChatBot Move Constructor" << std::endl;
+  _currentNode = that._currentNode;
+  _rootNode = that._rootNode;
+  _chatLogic = that._chatLogic;
+  _image = that._image;
+  
+  that._currentNode = nullptr;
+  that._rootNode = nullptr;
+  that._chatLogic = nullptr;
+  that._image = nullptr;
+}
 
 ////
 //// EOF STUDENT CODE

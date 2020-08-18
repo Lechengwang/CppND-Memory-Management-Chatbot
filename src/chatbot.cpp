@@ -10,6 +10,7 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
+   std::cout << "Weird constructor called" << std::endl;
     // invalidate data handles
     _image = nullptr;
     _chatLogic = nullptr;
@@ -52,10 +53,12 @@ ChatBot::ChatBot(ChatBot &that) {
   _chatLogic = that._chatLogic;
   _image = that._image;
   
+  _chatLogic->SetChatbotHandle(this);
+  
   that._currentNode = nullptr;
   that._rootNode = nullptr;
   that._chatLogic = nullptr;
-  that._image = nullptr;
+  that._image = NULL;
 }
 
 // Move construstor/operator are similar as Copy constructor/operator as Copy is using exclusive policy.
@@ -66,11 +69,54 @@ ChatBot::ChatBot(ChatBot && that) {
   _chatLogic = that._chatLogic;
   _image = that._image;
   
+  _chatLogic->SetChatbotHandle(this);
+  
   that._currentNode = nullptr;
   that._rootNode = nullptr;
   that._chatLogic = nullptr;
-  that._image = nullptr;
+  that._image = NULL;
 }
+
+// Copy operator with exclusive policy
+ChatBot &ChatBot::operator=(ChatBot &that) {
+      std::cout << "ChatBot Copy Operator" << std::endl;
+      _currentNode = that._currentNode;
+      _rootNode = that._rootNode;
+      _chatLogic = that._chatLogic;
+      _image = that._image;
+  
+    _chatLogic->SetChatbotHandle(this);
+
+      that._currentNode = nullptr;
+      that._rootNode = nullptr;
+      that._chatLogic = nullptr;
+      that._image = NULL;
+  
+      return *this;
+     }
+     
+    // Move operator
+ChatBot &ChatBot::operator=(ChatBot &&that) {
+      std::cout << "ChatBot Move Operator" << std::endl;
+      if (this == &that) {
+      return *this;
+      }
+      
+      delete _image;
+      _currentNode = that._currentNode;
+      _rootNode = that._rootNode;
+      _chatLogic = that._chatLogic;
+      _image = that._image;
+      
+      _chatLogic->SetChatbotHandle(this);
+      
+      that._currentNode = nullptr;
+      that._rootNode = nullptr;
+      that._chatLogic = nullptr;
+      that._image = NULL;
+  
+      return *this;
+    }
 
 ////
 //// EOF STUDENT CODE

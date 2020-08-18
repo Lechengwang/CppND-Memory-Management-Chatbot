@@ -10,7 +10,7 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
-   std::cout << "Weird constructor called" << std::endl;
+   //std::cout << "Weird constructor called" << std::endl;
     // invalidate data handles
     _image = nullptr;
     _chatLogic = nullptr;

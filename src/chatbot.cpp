@@ -7,17 +7,13 @@
 #include "graphedge.h"
 #include "chatbot.h"
 
-int ChatBot::_count = 0;
-
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
-  std::cout << "Meaning less ChatBot constructor called! " << std::endl;
     // invalidate data handles
     _image = nullptr;
     _chatLogic = nullptr;
     _rootNode = nullptr;
-  _count ++;
 }
 
 // constructor WITH memory allocation
@@ -31,21 +27,14 @@ ChatBot::ChatBot(std::string filename)
 
     // load image into heap memory
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
-  
-  _count ++;
 }
 
 ChatBot::~ChatBot()
 {
-    std::cout << "ChatBot Destructor with counter: " << _count << std::endl;
-  _count --;
-  
-  if (_count > 0) {
-    std::cout << "Not deleting _image as there are shared access. " << std::endl;
-  } 
+    std::cout << "ChatBot Destructor" << std::endl;
 
     // deallocate heap memory
-    else if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
         delete _image;
         _image = NULL;
@@ -54,7 +43,7 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
-// For copy constructor and copy operator, choose 'shared' ownership policy
+// For copy constructor and copy operator, choose 'exclusive' ownership policy
 // No need to update destructor as destructor already checking if _image != NULL
 ChatBot::ChatBot(ChatBot &that) {
   std::cout << "ChatBot Copy Constructor" << std::endl;
@@ -63,7 +52,10 @@ ChatBot::ChatBot(ChatBot &that) {
   _chatLogic = that._chatLogic;
   _image = that._image;
   
-  _count ++;
+  that._currentNode = nullptr;
+  that._rootNode = nullptr;
+  that._chatLogic = nullptr;
+  that._image = nullptr;
 }
 
 // Move construstor/operator are similar as Copy constructor/operator as Copy is using exclusive policy.

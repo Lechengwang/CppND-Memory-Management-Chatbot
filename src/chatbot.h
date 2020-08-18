@@ -21,6 +21,8 @@ private:
 
     // proprietary functions
     int ComputeLevenshteinDistance(std::string s1, std::string s2);
+    
+    static int _count;
 
 public:
     // constructors / destructors
@@ -33,7 +35,7 @@ public:
     ChatBot(ChatBot &);
     ChatBot(ChatBot &&);
     
-    // Copy operator with exclusive policy
+    // Copy operator with shared policy
     ChatBot &operator=(ChatBot &that) {
       std::cout << "ChatBot Copy Operator" << std::endl;
       _currentNode = that._currentNode;
@@ -41,10 +43,7 @@ public:
       _chatLogic = that._chatLogic;
       _image = that._image;
   
-      that._currentNode = nullptr;
-      that._rootNode = nullptr;
-      that._chatLogic = nullptr;
-      that._image = nullptr;
+      _count ++;
   
       return *this;
      }
